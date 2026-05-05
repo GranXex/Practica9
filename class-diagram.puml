@@ -1,0 +1,181 @@
+@startuml
+
+title Diagrama de Clases - IngenierosVsCarrerasPT1
+
+/' Interfaces '/
+interface ElementoDinamico {
+    +mover(direccion: String, distancia: int): void
+}
+
+interface Destruible {
+    +destruye(): void
+}
+
+interface Inventariable {
+    +registrar(): void
+    +borrar(): void
+}
+
+/' Clases '/
+
+class Personaje implements ElementoDinamico, Destruible {
+    -nombre: String
+    -vida: int
+    -posicionX: int
+    -posicionY: int
+    -sprite: ImageView
+    +Personaje(nombre: String, vida: int, posicionX: int, posicionY: int)
+    +getNombre(): String
+    +getVida(): int
+    +getPosicionX(): int
+    +getPosicionY(): int
+    +setPosicionX(x: int): void
+    +setPosicionY(y: int): void
+    +recibirDaño(daño: int): void
+    +destruye(): void
+    +mover(direccion: String, distancia: int): void
+    +atacar(enemigos: List<Enemigo>, root: Pane): void
+    +initGrafico(): void
+    +getSprite(): ImageView
+    #setSprite(sprite: ImageView): void
+}
+
+class Enemigo extends Personaje {
+    +Enemigo(nombre: String, x: int, y: int)
+    +initGrafico(): void
+}
+
+class Obstaculo implements Destruible {
+    -nombre: String
+    -daño: int
+    -posicionX: int
+    -posicionY: int
+    -destruido: boolean
+    +Obstaculo(nombre: String, daño: int, posicionX: int, posicionY: int)
+    +getNombre(): String
+    +getDaño(): int
+    +getPosicionX(): int
+    +getPosicionY(): int
+    +isDestruido(): boolean
+    +destruye(): void
+}
+
+class Recompensa implements Inventariable {
+    -nombre: String
+    -valor: int
+    -tipo: String
+    +Recompensa(nombre: String, valor: int, tipo: String)
+    +getNombre(): String
+    +getValor(): int
+    +getTipo(): String
+    +registrar(): void
+    +borrar(): void
+}
+
+class Inventario {
+    -capacidadMaxima: int
+    -items: List<Inventariable>
+    +Inventario(capacidadMaxima: int)
+    +getCapacidadMaxima(): int
+    +getItems(): List<Inventariable>
+    +agregarItem(item: Inventariable): boolean
+    +eliminarItem(item: Inventariable): boolean
+    +listarItems(): void
+}
+
+class Nivel {
+    -nombre: String
+    -numero: int
+    -dificultad: String
+    -obstaculos: List<Obstaculo>
+    -checkPoints: List<CheckPoint>
+    -elementosDinamicos: List<ElementoDinamico>
+    -inventario: Inventario
+    +Nivel(nombre: String, numero: int, dificultad: String, inventario: Inventario)
+    +getNombre(): String
+    +getNumero(): int
+    +getDificultad(): String
+    +agregarObstaculo(obstaculo: Obstaculo): void
+    +agregarCheckPoint(checkPoint: CheckPoint): void
+    +agregarElementoDinamico(elemento: ElementoDinamico): void
+    +moverElementosDinamicos(): void
+    +mostrarEstado(): void
+}
+
+class CheckPoint {
+    -nombre: String
+    -posicionX: int
+    -posicionY: int
+    -activado: boolean
+    +CheckPoint(nombre: String, posicionX: int, posicionY: int)
+    +getNombre(): String
+    +getPosicionX(): int
+    +getPosicionY(): int
+    +isActivado(): boolean
+    +activar(): void
+}
+
+class Utileria implements ElementoDinamico {
+    -nombre: String
+    -descripcion: String
+    -posicionX: int
+    -posicionY: int
+    -usada: boolean
+    +Utileria(nombre: String, descripcion: String, posicionX: int, posicionY: int)
+    +getNombre(): String
+    +getDescripcion(): String
+    +getPosicionX(): int
+    +getPosicionY(): int
+    +isUsada(): boolean
+    +usar(): void
+    +mover(direccion: String, distancia: int): void
+}
+
+class Launcher {
+    +main(args: String[]): void
+}
+
+class HelloApplication extends Application {
+    +start(stage: Stage): void
+}
+
+class HelloController {
+    -welcomeText: Label
+    +onHelloButtonClick(): void
+}
+
+class Arma implements Inventariable {
+    -nombre: String
+    -daño: int
+    -alcance: double
+    +Arma(nombre: String, daño: int, alcance: double)
+    +getNombre(): String
+    +getDaño(): int
+    +getAlcance(): double
+    +registrar(): void
+    +borrar(): void
+}
+
+class MainFX {
+}
+
+/' Relaciones de composición '/
+
+Nivel "1" *-- "0..*" Obstaculo : contain
+Nivel "1" *-- "0..*" CheckPoint : contain
+Nivel "1" *-- "0..*" ElementoDinamico : contain
+Nivel "1" o-- "1" Inventario : has
+
+Inventario "1" o-- "0..*" Inventariable : contains
+
+/' Relaciones de herencia '/
+
+Enemigo --|> Personaje
+Arma --|> Inventariable
+
+/' Relaciones de uso '/
+
+Launcher ..> HelloApplication : launches
+HelloApplication ..> HelloController : uses
+
+@enduml
