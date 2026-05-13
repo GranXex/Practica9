@@ -8,6 +8,10 @@ import java.util.List;
 public class GestorPersistencia {
 
 
+    public static void borrarPartida(String archivoGuardado) {
+
+    }
+
     public static class EstadoJuego {
         public int pisoActual;
         public String nombrePersonaje;
@@ -27,10 +31,7 @@ public class GestorPersistencia {
 
 
 
-    public static void guardarPartida(String nombreArchivo,
-                                      int pisoActual,
-                                      Personaje heroe,
-                                      List<Enemigo> enemigos) {
+    public static void guardarPartida(String nombreArchivo, int pisoActual, Personaje heroe, List<Enemigo> enemigos) {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(nombreArchivo));

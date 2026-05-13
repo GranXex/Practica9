@@ -1,4 +1,4 @@
 Piso 0
-Personaje Miguel 638 494 60
-Enemigo Fantasma0 505 175 2
-Enemigo Fantasma1 584 202 2
+Personaje Miguel 638 530 60
+Enemigo Fantasma0 704 479 2
+Enemigo Fantasma1 450 181 2
