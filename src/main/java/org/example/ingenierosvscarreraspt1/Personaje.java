@@ -16,6 +16,7 @@ public class Personaje implements ElementoDinamico, Destruible {
 
     public String getNombre() { return nombre; }
     public int getVida() { return vida; }
+    public void setVida(int vida) { this.vida = vida; }
     public int getPosicionX() { return posicionX; }
     public int getPosicionY() { return posicionY; }
 
@@ -69,7 +70,6 @@ public class Personaje implements ElementoDinamico, Destruible {
             sprite.setY(posicionY);
         }
     }
-    // Añade esto dentro de la clase Personaje
     public void atacar(java.util.List<Enemigo> enemigos, javafx.scene.layout.Pane root) {
         java.util.List<Enemigo> muertos = new java.util.ArrayList<>();
 
