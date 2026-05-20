@@ -74,3 +74,4 @@ ElementoDinamico   Destruible   Inventariable
               ↑                   Tesoro
           EnemigoJefe
 ```
+# Pract9
